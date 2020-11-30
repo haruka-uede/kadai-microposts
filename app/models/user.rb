@@ -12,6 +12,13 @@ class User < ApplicationRecord
     has_many :reverses_of_relationship, class_name: 'Relationship', foreign_key: 'follow_id'
     has_many :followers, through: :reverses_of_relationship, source: :user
    
+#   お気に入り
+   has_many :favorites
+   has_many :likes, through: :favorites, source: :micropost
+   has_many :reverses_of_favorites, class_name: 'Favorites', foreign_key: 'like_id'
+   has_many :likers, through: :reverces_of_favorites, source: :user
+   
+   
     def follow(other_user)
        unless self == other_user
            self.relationships.find_or_create_by(follow_id: other_user.id)
@@ -27,7 +34,23 @@ class User < ApplicationRecord
        self.followings.include?(other_user)
    end
    
+   
+   def like(m_post)
+       self.likes.find_or_create_by(micropost_id: m_post.id)
+   end
+   
+   def remove_like(m_post)
+       favorite = self.likes.find_by(micropost_id: m_post.id)
+       favorite.destroy if favorite
+   end
+   
+   def like?(m_post)
+       self.likes.include?(m_post)
+       
+   end
+   
    def feed_microposts
        Micropost.where(user_id: self.following_ids + [self.id])
-   end   
+   end
+   
 end
