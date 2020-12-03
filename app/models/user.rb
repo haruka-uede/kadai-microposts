@@ -34,19 +34,17 @@ class User < ApplicationRecord
        self.followings.include?(other_user)
    end
    
-   
    def like(m_post)
-       self.likes.find_or_create_by(micropost_id: m_post.id)
+       self.favorites.find_or_create_by(micropost_id: m_post.id)
    end
    
    def remove_like(m_post)
-       favorite = self.likes.find_by(micropost_id: m_post.id)
+       favorite = self.favorites.find_by(micropost_id: m_post.id)
        favorite.destroy if favorite
    end
    
    def like?(m_post)
        self.likes.include?(m_post)
-       
    end
    
    def feed_microposts

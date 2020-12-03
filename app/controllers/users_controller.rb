@@ -41,13 +41,7 @@ class UsersController < ApplicationController
 
   def likes
     @user = User.find(params[:id])
-    @likes = @user.likes.page(params[:page])
-    counts(@user)
-  end
-  
-  def likers
-    @user = User.find(params[:id])
-    @likers = @user.likes.
+    @likes = @user.likes.page(params[:page])   # likesにMicropostが結びついているのは、Userモデルのhas_many定義より。
     counts(@user)
   end
 

@@ -1,0 +1,18 @@
+<% if microposts.any? %>
+    <ul>
+        <% microposts.each do |mic| %>
+            <li class="media">
+                <img class="mr-2 rounded" src="<%= gravatar_url(mic.user, { size: 50 }) %>" alt="">
+                <div class="media-body">
+                    <div>
+                        <%= link_to mic.user.name, user_path(mic.user) %>
+                    </div>
+                    <div>
+                        <p><%= mic.content %></p>
+                    </div>
+                </div>
+            </li>
+            
+        <% end %>
+    </ul>
+<% end %>
