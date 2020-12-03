@@ -40,6 +40,9 @@ class UsersController < ApplicationController
   end
 
   def likes
+    
+    #binding.pry   ##デバッガーの呼び出し
+    
     @user = User.find(params[:id])
     @likes = @user.likes.page(params[:page])   # likesにMicropostが結びついているのは、Userモデルのhas_many定義より。
     counts(@user)
